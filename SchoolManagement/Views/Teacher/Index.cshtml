@@ -1,0 +1,57 @@
+﻿@model IEnumerable<ServicesLib.Domain.Models.Teacher>
+
+@{
+    ViewData["Title"] = "Index";
+}
+
+    <div class="card">
+        <div class="card-header bg-info" style="color:white">
+            <h2 class="text-center">Teacher List</h2>
+        </div>
+        <div class="card-body">
+            <div class="table-responsive">
+                <table class="table table-bordered table-striped">
+                    <thead>
+                        <tr>
+                            <th>Teacher ID</th>
+                            <th>Password</th>
+                            <th>Programme</th>
+                            <th>Teacher Name</th>
+                            <th>Teacher Image</th>
+                            <th colspan="3" class="text-center">Action</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var item in Model)
+                        {
+                        <tr>
+                            <td>
+                                @item.TeacherID
+                            </td>
+                            <td>
+                                @item.Password
+                            </td>
+                            <td>
+                                @item.Programme.ProgrammeName
+                            </td>
+                            <td>
+                                @item.FirstName @item.SurName
+                            </td>
+                            <td>
+                                @{
+                                    if (item.TeacherImage != null)
+                                    {
+                                        var base64 = Convert.ToBase64String(item.TeacherImage);
+                                        var imgSrc = String.Format("data:image/png;base64,{0}", base64);
+
+                                        <img src=@imgSrc style="max-width:50px; max-height:50px;" />
+                                    }
+                                }
+                            <td><a asp-action="Details" asp-route-id="@item.TeacherID" class="btn btn-success btn-sm">Teacher Details</a></td>
+                        </tr>
+                        }
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>

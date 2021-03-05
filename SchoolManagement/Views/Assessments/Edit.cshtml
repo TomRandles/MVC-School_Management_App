@@ -1,0 +1,102 @@
+﻿@model ServicesLib.Domain.Models.Assessment
+
+@{
+    ViewData["Title"] = "Edit";
+}
+
+<div class="row">
+    <div class="col-md-4 offset-4">
+        <h2 class="text-center">Create Assessment</h2>
+    </div>
+</div>
+<br />
+
+<form method="post" class="form-horizontal" style="background-color:khaki; margin:0 auto">
+    <div>
+        <div class="container">
+            <input type="hidden" asp-for="AssessmentID" />
+            <div class="row">
+                <div class="col-md-4"></div>
+                <div class="form-group col-md-4">
+                    <label asp-for=AssessmentName class="control-label font-weight-bold"></label>
+                    <input type="text" asp-for=AssessmentName class="form-control">
+                    <span asp-validation-for=AssessmentName class="text-danger"></span>
+                </div>
+                <div class="col-md-4"></div>
+            </div>
+
+            <div class="row">
+                <div class="col-md-4"></div>
+                <div class="form-group col-md-4">
+                    <label asp-for=AssessmentDescription class="control-label font-weight-bold"></label>
+                    <textarea type="text" asp-for=AssessmentDescription class="form-control" rows="2"></textarea>
+                    <span asp-validation-for=AssessmentDescription class="text-danger"></span>
+                </div>
+                <div class="col-md-4"></div>
+            </div>
+
+            <div class="row">
+                <div class="col-md-4"></div>
+                <div class="form-group col-md-4">
+                    <label asp-for=AssessmentTotalMark class="control-label font-weight-bold"></label>
+                    <input type="number" asp-for=AssessmentTotalMark class="form-control">
+                    <span asp-validation-for=AssessmentTotalMark class="text-danger"></span>
+                </div>
+                <div class="col-md-4"></div>
+            </div>
+
+            <div class="row form-group">
+                <div class="col-md-4 offset-4">
+                    <label asp-for=AssessmentType class="control-label text-right font-weight-bold"></label>
+                    <br />
+                    <div class="radio">
+                        <label asp-for=AssessmentType class="control-label font-weight-bold">
+                            <input type="radio" asp-for=AssessmentType value="project" />
+                            Project
+                        </label>
+                    </div>
+                    <div class="radio">
+                        <label asp-for=AssessmentType class="control-label font-weight-bold">
+                            <input type="radio" asp-for=AssessmentType value="exam" />
+                            Exam
+                        </label>
+                    </div>
+                    <span asp-validation-for=AssessmentType class="text-danger"></span>
+                </div>
+            </div>
+
+            @*Add Assessment to an existing Module
+        Dropdown for existing modules that the Assessment may select.*@
+
+            <div class="row">
+                <div class="col-md-4"></div>
+                <div class="form-group col-md-4">
+                    <label class="control-label">Module options:</label>
+                    <select class="form-control" asp-for=ModuleID asp-items="@(new SelectList(ViewBag.ModuleList,"ModuleID","ModuleName",Model.ModuleID))">
+                        <option value="">Select Module</option>
+                    </select>
+                    <span asp-validation-for=ModuleID class="text-danger"></span>
+                </div>
+                <div class="col-md-4"></div>
+            </div>
+            <br />
+
+            <div class="row">
+                <div class="col-md-4"></div>
+                <div class="form-group col-md-4">
+                    <button type="submit" class="btn btn-primary">Enter details</button>
+                </div>
+                <div class="col-md-4"></div>
+            </div>
+            <br />
+        </div>
+    </div>
+</form>
+
+<div>
+    <a asp-action="Index">Back to List</a>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

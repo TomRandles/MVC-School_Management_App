@@ -1,0 +1,16 @@
+﻿
+@{
+    ViewData["Title"] = "Delete";
+}
+
+    <div class="text-center bg-light p-4 mt-5">
+
+
+        @if (ViewBag.ErrorMsg != null)
+        {
+            <h1 class="text-danger">Delete Failed !</h1><br />
+            <p>@ViewBag.ErrorMsg</p>
+        }
+
+        <a asp-action="Index" asp-controller="Home" class="btn btn-info btn-sm">Back to Homepage</a>
+    </div>

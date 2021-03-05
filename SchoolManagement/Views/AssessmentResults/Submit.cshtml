@@ -1,0 +1,284 @@
+﻿@model ServicesLib.Domain.Models.AssessmentResult
+
+@{
+    ViewData["Title"] = "Submit";
+}
+
+@{
+    @*
+        if (@RouteData.Values["id"] != null)
+        {
+            Model.StudentID = @RouteData.Values["id"].ToString();
+        }
+    *@
+}
+
+@*
+    Order of submission
+    1. If student ID was passed in via routing
+    or
+    Select student from a dropdown menu of existing students
+
+
+    Get programme of study for student
+
+    Get the module list for this programme
+
+    For each module - get a dropdown list of all of the assessments
+
+    For each assessment - enter the assessment results
+
+
+*@
+@*<br />
+    <h4 class="text-center"><strong>Student name: </strong>@Model.StudentID</h4>
+    <h4 class="text-center"><strong>Programme: </strong>@Model.ProgrammeID</h4>
+    <br />*@
+<div class="card">
+    <div class="card-header bg-info">
+        <h2 class="text-center" style="color:white">Submit Assessment Result</h2>
+    </div>
+    <div class="card-body">
+        <form method="post" asp-action="submit" class="form-horizontal">
+            <div>
+                <div class="container">
+                
+
+                    @{
+                        if (ViewBag.StudentId != null)
+                        {
+                            <div class="row">
+                                <div class="form-group col-4 offset-4">
+                                    <label asp-for=StudentID class="control-label font-weight-bold"></label>
+                                    <input type="text" asp-for=StudentID name=StudentID value="@ViewBag.StudentId" placeholder="Enter The Student ID" class="form-control" readonly>
+                                    <span asp-validation-for=StudentID id="StdError" class="text-danger"></span>
+                                </div>
+                            </div>
+                        }
+
+                        else
+                        {
+                            <div class="row">
+                                <div class="form-group col-4 offset-4">
+                                    <label asp-for=StudentID class="control-label font-weight-bold"></label>
+                                    <select asp-for="StudentID" class="form-control" asp-items="@(new SelectList(ViewBag.StudentList,"StudentID","StudentID"))">
+                                        <option value="">---Select Student ID---</option>
+                                    </select>
+                                    <span asp-validation-for=StudentID id="StdError" class="text-danger"></span>
+                                </div>
+                            </div>
+                        }
+                    }
+
+                    @{
+                        if (ViewBag.StudentFullName != null)
+                        {
+                            <div class="row">
+                                <div class="col-md-4"></div>
+                                <div class="form-group col-md-4">
+                                    <label class="control-label font-weight-bold">Student Full Name</label>
+                                    <input type="text" value="@ViewBag.StudentFullName" class="form-control" readonly>
+                                </div>
+                                <div class="col-md-4"></div>
+                            </div>
+                        }
+
+                        else
+                        {
+                            <div class="row">
+                                <div class="col-md-4"></div>
+                                <div class="form-group col-md-4">
+                                    <label class="control-label font-weight-bold">Student Full Name</label>
+                                    <input type="text" id="StudentFullName" class="form-control" readonly>
+                                </div>
+                                <div class="col-md-4"></div>
+                            </div>
+                        }
+                    }
+
+
+
+                    <div class="row">
+                        <div class="col-md-4"></div>
+                        <div class="form-group col-md-4">
+                            <label asp-for=ProgrammeID class="control-label font-weight-bold"></label>
+                            <input type="text" asp-for=ProgrammeID name=ProgrammeID class="form-control" readonly>
+                            <span asp-validation-for=ProgrammeID class="text-danger"></span>
+                        </div>
+                        <div class="col-md-4"></div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-md-4"></div>
+                        <div class="form-group col-md-4">
+                            <label asp-for=ModuleID class="control-label font-weight-bold">Select a Module:</label>
+                            <select class="form-control" asp-for=ModuleID></select>
+                            <span asp-validation-for=ModuleID class="text-danger"></span>
+                        </div>
+                        <div class="col-md-4"></div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-md-4"></div>
+                        <div class="form-group col-md-4">
+                            <label asp-for=AssessmentID class="control-label font-weight-bold">Select Module Assessment</label>
+                            <select class="form-control" asp-for=AssessmentID></select>
+                            <span asp-validation-for=AssessmentID class="text-danger"></span>
+                        </div>
+                        <div class="col-md-4"></div>
+                    </div>
+
+
+
+                    <div class="row">
+                        <div class="col-md-4"></div>
+                        <div class="form-group col-md-4">
+                            <label asp-for=AssessmentResultMark class="control-label font-weight-bold"></label>
+                            <input type="text" asp-for=AssessmentResultMark class="form-control">
+                            <span asp-validation-for=AssessmentResultMark class="text-danger"></span>
+                        </div>
+                        <div class="col-md-4"></div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-4"></div>
+                        <div class="form-group col-md-4">
+                            <label asp-for=AssessmentDate class="control-label font-weight-bold"></label>
+                            <input type="date" asp-for=AssessmentDate class="form-control">
+                            <span asp-validation-for=AssessmentDate class="text-danger"></span>
+                        </div>
+                        <div class="col-md-4"></div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-md-4"></div>
+                        <div class="form-group col-md-6">
+                            <label asp-for=AssessmentResultDescription class="control-label font-weight-bold"></label>
+                            <textarea type="text" asp-for=AssessmentResultDescription class="form-control" rows="2"></textarea>
+                            <span asp-validation-for=AssessmentResultDescription class="text-danger"></span>
+                        </div>
+                        <div class="col-md-2"></div>
+                    </div>
+
+                    <br />
+
+                    <div class="row">
+                        <div class="col-md-4"></div>
+                        <div class="form-group col-md-6">
+                            <button type="submit" class="btn btn-success btn-block">Submit</button>
+                        </div>
+                        <div class="col-md-2"></div>
+                    </div>
+                    <br />
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
+
+
+
+<script type="text/javascript">
+
+</script>
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+    <script type="text/javascript">
+
+        //When Student Id is found via routing Parameter
+        $(document).ready(function () {
+
+        var studentId= $("#StudentID").val();
+
+            if (studentId != "" || studentId != null) {
+                GetProgramme(studentId);
+            }
+
+        });
+
+        //When Student Id not found via routing Parameter show dropdown and get value on chanage
+        $("#StudentID").on("change", function () {
+
+            var studentId = $(this).val();
+            GetStudentFullName(studentId);
+            GetProgramme(studentId);
+
+        });
+
+
+        function GetProgramme(studentId) {
+        $.ajax({
+                url: "/AssessmentResults/GetProgrammeIdByStudent",
+                type: "post",
+                data: { id: studentId },
+                success: function (response) {
+                    if (response === null) {
+
+                        //To clear all value of previous form value
+                        $("#ProgrammeID").val("");
+                        $("#ModuleID").empty();
+                        $("#AssessmentID").empty();
+                    }
+
+                    else {
+                        $("#ProgrammeID").val("");
+                        $("#ProgrammeID").val(response.programmeID);
+                        getModule(response.programmeID);
+                    }
+
+                }
+            });
+        }
+
+        function GetStudentFullName(studentId) {
+        $.ajax({
+                url: "/AssessmentResults/GetStudentById",
+                type: "post",
+                data: { id: studentId },
+                success: function (response) {
+                    if (response != null) {
+                        $("#StudentFullName").val(response);
+                        
+                    }
+
+                }
+            });
+        }
+
+        //Get All Module By Programme
+        function getModule(programmeID) {
+            $.ajax({
+                url: "/AssessmentResults/GetModuleByProgramme",
+                type: 'post',
+                data: { id: programmeID },
+                success: function (response) {
+                    $("#ModuleID").empty();
+                    $("#ModuleID").append("<option value=''>" + "---Select Module---" + "</option>");
+                    $.each(response, function (index, value) {
+                        $("#ModuleID").append("<option value='" + value.moduleID + "'>" + value.moduleName + "</option>");
+                    });
+                }
+            });
+        };
+
+
+        //Get All Assessment By Module when click Module Dropdown
+        $("#ModuleID").on("change", function () {
+            var id = $(this).val();
+            console.log(id);
+            $.ajax({
+                url: "/AssessmentResults/GetAssessmentByModule",
+                type: "post",
+                data: { id: id },
+                success: function (response) {
+                    console.log(response);
+                    $("#AssessmentID").empty();
+                    $("#AssessmentID").append("<option value=''>" + "---Select Module Assessment---" + "</option>");
+                    $.each(response, function (index, value) {
+                        $("#AssessmentID").append("<option value='" + value.assessmentID + "'>" + value.assessmentName + ", Maximum Mark: " + value.assessmentTotalMark + "</option>");
+                    });
+                }
+            });
+        });
+    </script>
+
+}

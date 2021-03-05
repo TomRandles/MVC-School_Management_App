@@ -1,0 +1,371 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>@ViewData["Title"] - SchoolManagement</title>
+    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="~/css/site.css" />
+</head>
+<body>
+
+    <!--<header>
+            <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-white border-bottom box-shadow mb-3">
+                <div class="container">
+                    <a class="navbar-brand" asp-area="" asp-controller="Home" asp-action="Index">School_Management</a>
+                    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target=".navbar-collapse" aria-controls="navbarSupportedContent"
+                            aria-expanded="false" aria-label="Toggle navigation">
+                        <span class="navbar-toggler-icon"></span>
+                    </button>
+
+
+                    <div class="navbar-collapse collapse d-sm-inline-flex justify-content-between">
+                        <ul class="navbar-nav flex-grow-1">
+                            <li class="nav-item">
+                                <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Index">Home</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
+                            </li>
+
+                            @if (User.Identity.IsAuthenticated)
+                            {
+                                <li class="nav-item">
+                                    <a class="btn btn-info" asp-area="" asp-controller="Home" asp-action="Index">Home</a>
+                                </li>
+                            }
+
+                            @if (User.IsInRole("Admin"))
+                            {
+                                <li class="nav-item dropdown">
+                                    <a class="btn btn-info dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true">
+                                        Programme
+                                    </a>
+                                    <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                                        <a class="dropdown-item" asp-area="" asp-controller="Programme" asp-action="Create">Create</a>
+                                        <a class="dropdown-item" asp-area="" asp-controller="Programme" asp-action="index">Programme List</a>
+                                    </div>
+                                </li>
+                            }
+
+
+
+                            @if (User.IsInRole("Admin"))
+                            {
+                                <li class="nav-item dropdown">
+                                    <a class="btn btn-info dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true">
+                                        Module
+                                    </a>
+                                    <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                                        <a class="dropdown-item" asp-area="" asp-controller="Module" asp-action="Create">Create</a>
+                                        <a class="dropdown-item" asp-area="" asp-controller="Module" asp-action="index">Module List</a>
+                                    </div>
+                                </li>
+                            }
+
+
+
+                            @if (User.IsInRole("Admin"))
+                            {
+                                <li class="nav-item dropdown">
+                                    <a class="btn btn-info dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true">
+                                        Assessment
+                                    </a>
+                                    <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                                        <a class="dropdown-item" asp-area="" asp-controller="Assessments" asp-action="Create">Create</a>
+                                        <a class="dropdown-item" asp-area="" asp-controller="Assessments" asp-action="index">Assessment List</a>
+                                    </div>
+                                </li>
+                            }
+
+
+
+                            @{
+                                if (User.IsInRole("Admin") || User.IsInRole("Teacher"))
+                                {
+                                    <li class="nav-item dropdown">
+                                        <a class="btn btn-info dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true">
+                                            Assessment Result
+                                        </a>
+                                        <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                                            <a class="dropdown-item" asp-area="" asp-controller="AssessmentResults" asp-route-id="@null" asp-action="Submit">Submit</a>
+                                            <a class="dropdown-item" asp-area="" asp-controller="AssessmentResults" asp-action="ShowAll">Assessment Result List</a>
+                                        </div>
+                                    </li>
+                                }
+                            }
+
+                            @if (User.IsInRole("Admin"))
+                            {
+                                <li class="nav-item dropdown">
+                                    <a class="btn btn-info dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true">
+                                        Register User
+                                    </a>
+                                    <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                                        <a class="dropdown-item" asp-area="" asp-controller="Student" asp-action="Register">Student</a>
+                                        <a class="dropdown-item" asp-area="" asp-controller="Teacher" asp-action="Register">Teacher</a>
+                                    </div>
+                                </li>
+                            }
+
+
+                            @if (User.IsInRole("Admin"))
+                            {
+                                <li class="nav-item dropdown">
+                                    <a class="btn btn-info dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true">
+                                        User List
+                                    </a>
+                                    <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                                        <a class="dropdown-item" asp-area="" asp-controller="Student" asp-action="ShowAll">Student List</a>
+                                        <a class="dropdown-item" asp-area="" asp-controller="Teacher" asp-action="Index">Teacher List</a>
+                                    </div>
+                                </li>
+                            }
+
+                            @if (User.IsInRole("Student"))
+                            {
+                                <li class="nav-item">
+                                    <a class="btn btn-info" asp-area="" asp-controller="Student" asp-action="ShowResult" asp-route-id="@User.Identity.Name">See Your Result</a>
+                                </li>
+                            }
+
+                        </ul>
+                        <ul class="navbar-nav ml-auto">
+
+
+
+                            @if (User.IsInRole("Student"))
+                            {
+                                <li class="nav-item">
+                                    <a class="btn btn-info" asp-area="" asp-controller="Student" asp-action="Details" asp-route-id="@User.Identity.Name">Profile</a>
+                                </li>
+                            }
+
+                            @if (User.IsInRole("Teacher"))
+                            {
+                                <li class="nav-item">
+                                    <a class="btn btn-info" asp-area="" asp-controller="Teacher" asp-action="Details" asp-route-id="@User.Identity.Name">Profile</a>
+                                </li>
+                            }
+
+                            @if (User.IsInRole("Admin"))
+                            {
+                                <li class="nav-item">
+                                    <a class="btn btn-info" asp-area="" asp-controller="Auth" asp-action="ChangeAdminPassword">Change Password</a>
+                                </li>
+                            }
+
+                            @{
+                                if (User.Identity.IsAuthenticated)
+                                {
+                                    <li class="nav-item dropdown">
+                                        <a class="btn btn-info dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true">
+
+                                            @{
+                                                var list = User.Claims.ToList();
+                                                string surname = list[2].Value;
+
+                                            }
+
+                                            Welcome @surname
+                                        </a>
+                                        <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                                            <a class="dropdown-item" asp-area="" asp-controller="Auth" asp-action="Logout">Logout</a>
+                                        </div>
+                                    </li>
+                                }
+                            }
+
+                        </ul>
+                    </div>
+                </div>
+            </nav>
+        </header> -->
+
+    <header>
+        <nav class="navbar navbar-expand-lg navbar-light bg-info">
+
+            <div class="container-fluid">
+                <a class="btn font-weight-bold" style="color:white" asp-area="" asp-controller="Home" asp-action="Index">School Management</a>
+                <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+
+                <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                    <ul class="navbar-nav mr-auto">
+
+                        @if (User.Identity.IsAuthenticated)
+                        {
+                            <li class="nav-item">
+                                <a class="btn btn-info" asp-area="" asp-controller="Home" asp-action="Index">Home</a>
+                            </li>
+                        }
+
+                        @if (User.IsInRole("Admin"))
+                        {
+                            <li class="nav-item dropdown">
+                                <a class="btn btn-info dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true">
+                                    Programme
+                                </a>
+                                <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                                    <a class="dropdown-item" asp-area="" asp-controller="Programme" asp-action="Create">Create</a>
+                                    <a class="dropdown-item" asp-area="" asp-controller="Programme" asp-action="index">Programme List</a>
+                                </div>
+                            </li>
+                        }
+
+
+
+                        @if (User.IsInRole("Admin"))
+                        {
+                            <li class="nav-item dropdown">
+                                <a class="btn btn-info dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true">
+                                    Module
+                                </a>
+                                <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                                    <a class="dropdown-item" asp-area="" asp-controller="Module" asp-action="Create">Create</a>
+                                    <a class="dropdown-item" asp-area="" asp-controller="Module" asp-action="index">Module List</a>
+                                </div>
+                            </li>
+                        }
+
+
+
+                        @if (User.IsInRole("Admin"))
+                        {
+                            <li class="nav-item dropdown">
+                                <a class="btn btn-info dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true">
+                                    Assessment
+                                </a>
+                                <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                                    <a class="dropdown-item" asp-area="" asp-controller="Assessments" asp-action="Create">Create</a>
+                                    <a class="dropdown-item" asp-area="" asp-controller="Assessments" asp-action="index">Assessment List</a>
+                                </div>
+                            </li>
+                        }
+
+
+
+                        @{
+                            if (User.IsInRole("Admin") || User.IsInRole("Teacher"))
+                            {
+                                <li class="nav-item dropdown">
+                                    <a class="btn btn-info dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true">
+                                        Assessment Result
+                                    </a>
+                                    <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                                        <a class="dropdown-item" asp-area="" asp-controller="AssessmentResults" asp-route-id="@null" asp-action="Submit">Submit</a>
+                                        <a class="dropdown-item" asp-area="" asp-controller="AssessmentResults" asp-action="ShowAll">Assessment Result List</a>
+                                    </div>
+                                </li>
+                            }
+                        }
+
+                        @if (User.IsInRole("Admin"))
+                        {
+                            <li class="nav-item dropdown">
+                                <a class="btn btn-info dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true">
+                                    Register User
+                                </a>
+                                <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                                    <a class="dropdown-item" asp-area="" asp-controller="Student" asp-action="Register">Student</a>
+                                    <a class="dropdown-item" asp-area="" asp-controller="Teacher" asp-action="Register">Teacher</a>
+                                </div>
+                            </li>
+                        }
+
+
+                        @if (User.IsInRole("Admin"))
+                        {
+                            <li class="nav-item dropdown">
+                                <a class="btn btn-info dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true">
+                                    User List
+                                </a>
+                                <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                                    <a class="dropdown-item" asp-area="" asp-controller="Student" asp-action="ShowAll">Student List</a>
+                                    <a class="dropdown-item" asp-area="" asp-controller="Teacher" asp-action="Index">Teacher List</a>
+                                </div>
+                            </li>
+                        }
+
+                        @if (User.IsInRole("Student"))
+                        {
+                            <li class="nav-item">
+                                <a class="btn btn-info" asp-area="" asp-controller="Student" asp-action="ShowResult" asp-route-id="@User.Identity.Name">See Your Result</a>
+                            </li>
+                        }
+
+                    </ul>
+                    <ul class="navbar-nav ml-auto">
+
+
+
+                        @if (User.IsInRole("Student"))
+                        {
+                            <li class="nav-item">
+                                <a class="btn btn-info" asp-area="" asp-controller="Student" asp-action="Details" asp-route-id="@User.Identity.Name">Profile</a>
+                            </li>
+                        }
+
+                        @if (User.IsInRole("Teacher"))
+                        {
+                            <li class="nav-item">
+                                <a class="btn btn-info" asp-area="" asp-controller="Teacher" asp-action="Details" asp-route-id="@User.Identity.Name">Profile</a>
+                            </li>
+                        }
+
+                        @if (User.IsInRole("Admin"))
+                        {
+                            <li class="nav-item">
+                                <a class="btn btn-info" asp-area="" asp-controller="Auth" asp-action="ChangeAdminPassword">Change Password</a>
+                            </li>
+                        }
+
+                        @{
+                            if (User.Identity.IsAuthenticated)
+                            {
+                                <li class="nav-item dropdown">
+                                    <a class="btn btn-info dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true">
+
+                                        @{
+                                            var list = User.Claims.ToList();
+                                            string surname = list[2].Value;
+
+                                        }
+
+                                        Welcome @surname
+                                    </a>
+                                    <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                                        <a class="dropdown-item" asp-area="" asp-controller="Auth" asp-action="Logout">Logout</a>
+                                    </div>
+                                </li>
+                            }
+
+                        }
+
+
+                    </ul>
+                </div>
+            </div>
+
+        </nav>
+
+    </header>
+
+    <div class="container">
+        <main role="main" class="pb-3">
+            @RenderBody()
+        </main>
+    </div>
+
+    <footer class="border-top footer text-muted">
+        <div class="container">
+            &copy; 2021 - School_Management - <a asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
+        </div>
+    </footer>
+    <script src="~/lib/jquery/dist/jquery.min.js"></script>
+    <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="~/js/site.js" asp-append-version="true"></script>
+    @await RenderSectionAsync("Scripts", required: false)
+</body>
+</html>

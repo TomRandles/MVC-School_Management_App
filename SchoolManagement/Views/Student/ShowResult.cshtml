@@ -1,0 +1,95 @@
+﻿@model SchoolManagement.ViewModel.ShowStudentResultViewModel
+
+@{
+    ViewData["Title"] = "ShowStudentResult";
+}
+
+<div class="card">
+    <div class="card-header bg-info">
+        <h2 class="text-center" style="color:white">Student Results</h2>
+    </div>
+    <div class="card-body">
+        <div class="row">
+            <div class="col-4">
+                @{
+                    if (@Model.StudentImage != null)
+                    {
+                        var base64 = Convert.ToBase64String(@Model.StudentImage);
+                        var imgSrc = String.Format("data:image/png;base64,{0}", base64);
+
+                        <img src=@imgSrc style="max-width:200px; max-height:200px;" alt="Student_Image" />
+                    }
+                    else
+                    {
+                        <img src="~/Content/no-photo.png" style="max-width:200px; max-height:200px;" />
+                    }
+                }
+            </div>
+            <div class="col-8">
+                <br />
+                <br />
+                <h4>Student Name: <span style="color:#808080">@Model.StudentName</span> </h4>
+                <h4>Program Name: <span style="color:#808080">@Model.Programme</span> </h4>
+            </div>
+        </div>
+
+        <hr />
+        @*Show student name and programme of study
+
+            Get list of Assessment results for this student
+
+        *@
+        <div class="container">
+            <table class="table table-bordered table-hover table-condensed table-functions-grad">
+                <thead>
+                    <tr>
+                        <th>Module</th>
+                        <th>Assessment</th>
+                        <th>Assessment date</th>
+                        <th>Student feedback</th>
+                        <th>Mark</th>
+                        <th>Maximum mark</th>
+                    </tr>
+                </thead>
+                <tbody>
+
+                    @{
+                        if (Model.listOfAssessmentResult.Count > 0)
+                        {
+                            foreach (var item in Model.listOfAssessmentResult)
+                            {
+                                <tr>
+                                    <td>@item.Module.ModuleName</td>
+                                    <td>@item.Assessment.AssessmentName</td>
+                                    <td>@item.AssessmentDate.ToShortDateString()</td>
+                                    <td>@item.AssessmentResultDescription</td>
+                                    <td align="center">@item.AssessmentResultMark</td>
+                                    <td align="center">@item.Assessment.AssessmentTotalMark</td>
+                                </tr>
+                            }
+                        }
+
+                        else
+                        {
+                            <tr>
+                                <td colspan="6"><h3 class="text-center text-danger">No Result Found !</h3></td>
+                            </tr>
+
+                        }
+
+                    }
+                </tbody>
+            </table>
+        </div>
+
+        <br />
+    </div>
+</div>
+
+
+
+<br />
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

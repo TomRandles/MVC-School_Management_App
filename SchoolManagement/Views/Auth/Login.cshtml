@@ -1,0 +1,48 @@
+﻿@model ServicesLib.Domain.ViewModel.LoginVm
+
+@{
+    ViewData["Title"] = "Login";
+
+}
+
+<div class="card">
+    <div class="card-header bg-info">
+        <h2 class="text-center" style="color:white">User Login</h2>
+    </div>
+    <div class="card-body">
+        @{ 
+            if(ViewBag.ErrorMsg != null)
+            {
+                <div class="row">
+                    <div class="col-4 offset-4 bg-light p-2">
+                        <div class="text-danger font-weight-bold text-center">@ViewBag.ErrorMsg</div>
+                    </div>
+                </div>
+            }
+        }
+        <div class="row">
+            <div class="col-md-4 offset-4">
+                <form asp-action="Login">
+                    <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                    <div class="form-group">
+                        <label asp-for="UserName" class="control-label font-weight-bold"></label>
+                        <input asp-for="UserName" class="form-control" />
+                        <span asp-validation-for="UserName" class="text-danger"></span>
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="Password" class="control-label font-weight-bold"></label>
+                        <input asp-for="Password" type="password" class="form-control" />
+                        <span asp-validation-for="Password" class="text-danger"></span>
+                    </div>
+                    <div class="form-group">
+                        <input type="submit" value="Login" class="btn btn-block btn-success" />
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

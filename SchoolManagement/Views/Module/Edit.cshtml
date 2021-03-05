@@ -1,0 +1,89 @@
+﻿@model ServicesLib.Domain.Models.Module
+
+@{
+    ViewData["Title"] = "Edit";
+}
+
+
+
+<div class="row">
+    <div class="col-md-4"></div>
+    <div class="col-md-4">
+        <h2 class="text-center">Create Module</h2>
+    </div>
+    <div class="col-md-4"></div>
+</div>
+
+
+<form method="post" asp-action="create" class="form-horizontal" style="background-color:khaki; margin:0 auto">
+    <div>
+        <div class="container">
+            <input type="hidden" asp-for="ModuleID" />
+
+            <div class="row">
+                <div class="col-md-4"></div>
+                <div class="form-group col-md-3">
+                    <label asp-for=ModuleName class="control-label font-weight-bold"></label>
+                    <input type="text" asp-for=ModuleName class="form-control">
+                    <span asp-validation-for=ModuleName class="text-danger"></span>
+                </div>
+                <div class="col-md-5"></div>
+            </div>
+
+            <div class="row">
+                <div class="col-md-4"></div>
+                <div class="form-group col-md-3">
+                    <label asp-for=ModuleDescription class="control-label font-weight-bold"></label>
+                    <textarea type="text" asp-for=ModuleDescription class="form-control" rows="2"></textarea>
+                    <span asp-validation-for=ModuleDescription class="text-danger"></span>
+                </div>
+                <div class="col-md-5"></div>
+            </div>
+
+            <div class="row">
+                <div class="col-md-4"></div>
+                <div class="form-group col-md-3">
+                    <label asp-for=ModuleCredits class="control-label font-weight-bold"></label>
+                    <input type="text" asp-for=ModuleCredits class="form-control">
+                    <span asp-validation-for=ModuleCredits class="text-danger"></span>
+                </div>
+                <div class="col-md-5"></div>
+            </div>
+
+            @*Add module to an existing programme*@
+            @* Dropdown for existing programmes that the student may select.*@
+
+            @{
+                if (Model.Programme != null)
+                {
+                    string pr = Model.ProgrammeID;
+                    <div class="row">
+                        <div class="col-md-4"></div>
+                        <div class="form-group col-md-3">
+                            <label asp-for=ProgrammeID class="control-label">Programme options:</label>
+                            <select class="form-control" asp-for=ProgrammeID asp-items="@(new SelectList(ViewBag.ProgrammeList, "ProgrammeID", "ProgrammeName", Model.ProgrammeID))">
+
+                                <option value="">--Select Programme--</option>
+
+                            </select>
+                        </div>
+                        <div class="col-md-5"></div>
+                    </div>
+                }
+            }
+
+            <div class="row">
+                <div class="col-md-4"></div>
+                <div class="form-group col-md-3">
+                    <button type="submit" class="btn btn-primary">Enter details</button>
+                </div>
+                <div class="col-md-5"></div>
+            </div>
+            <br />
+        </div>
+    </div>
+</form>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

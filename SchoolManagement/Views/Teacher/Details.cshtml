@@ -1,0 +1,88 @@
+﻿@model ServicesLib.Domain.Models.Teacher
+
+@{
+    ViewData["Title"] = "Details";
+}
+
+    <div class="card">
+        <div class="card-header bg-info" style="color:white">
+            <h2 class="text-center">Teacher Details</h2>
+        </div>
+        <div class="card-body">
+            <div class="row">
+
+                <div class="col-4">
+                    @{
+                        if (Model.TeacherImage != null)
+                        {
+                            var base64 = Convert.ToBase64String(Model.TeacherImage);
+                            var imgSrc = String.Format("data:image/png;base64,{0}", base64);
+                            <img src=@imgSrc style="max-width:200px; max-height:200px;" />
+                        }
+
+                        else
+                        {
+                            <img src="~/Content/no-photo.png" style="max-width:200px; max-height:200px;" />
+                        }
+                    }
+                </div>
+
+                <div class="col-8 text-left pt-5">
+                    <h4 class="text-left">@Model.FirstName @Model.SurName</h4>
+                    <h4 class="text-left">@Model.Programme.ProgrammeName</h4>
+                </div>
+
+            </div>
+            <br />
+
+
+            <div class="table-responsive">
+                <table class="table table-bordered" style="white-space:nowrap">
+
+
+                    <tr>
+                        <td class="font-weight-bold">Teacher ID</td>
+                        <td>@Model.TeacherID</td>
+                        <td class="font-weight-bold">Teacher name</td>
+                        <td>@Model.FirstName @Model.SurName</td>
+                    </tr>
+
+                    <tr>
+                        <td class="font-weight-bold">Mobile phone</td>
+                        <td>@Model.MobilePhoneNumber</td>
+                        <td class="font-weight-bold">Email</td>
+                        <td>@Model.EmailAddress</td>
+                    </tr>
+
+                    <tr>
+                        <td class="font-weight-bold">Programme</td>
+                        <td>@Model.Programme.ProgrammeName</td>
+                        <td class="font-weight-bold">Teacher PPS</td>
+                        <td>@Model.FirstName @Model.TeacherPPS</td>
+                    </tr>
+
+                    <tr>
+                        <td class="font-weight-bold">Teacher Gender</td>
+                        <td>@Model.GenderType</td>
+                        <td class="font-weight-bold">Programme Type</td>
+                        <td>@Model.FirstName @Model.FullOrPartTime</td>
+                    </tr>
+                    <tr>
+                        <td class="font-weight-bold">Address</td>
+                        <td colspan="3">@Model.AddressOne , @Model.AddressTwo , @Model.Town , @Model.County</td>
+                    </tr>
+                </table>
+
+                @if (User.IsInRole("Admin"))
+                {
+                    @*<a asp-action="Update Teacher" class="btn btn-primary" asp-route-id="@Model.TeacherID">Update student</a>*@
+                    <a asp-action="Delete" class="btn btn-danger" asp-route-id="@Model.TeacherID">Delete Teacher</a>
+                    <a asp-action="index" class="btn btn-info">Back to Teacher List</a>
+                }
+
+
+            </div>
+
+
+        </div>
+    </div>

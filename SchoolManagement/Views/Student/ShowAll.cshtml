@@ -1,0 +1,61 @@
+﻿@model IEnumerable<ServicesLib.Domain.Models.Student>
+
+@{
+    ViewData["Title"] = "ShowAll";
+}
+
+<div class="card">
+    <div class="card-header bg-info" style="color:white">
+        <h2 class="text-center">Student List</h2> 
+    </div>
+    <div class="card-body">
+        <div class="table-responsive">
+            <table class="table table-bordered table-striped">
+                <thead>
+                    <tr>
+                        <th>Student ID</th>
+                        <th>Password</th>
+                        <th>Programme</th>
+                        <th>Student Name</th>
+                        <th>Student Image</th>
+                        <th colspan="3" class="text-center">Action</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var item in Model)
+                    {
+                    <tr>
+                        <td>
+                            @item.StudentID
+                        </td>
+                        <td>
+                            @item.Password
+                        </td>
+                        <td>
+                            @item.Programme.ProgrammeName
+                        </td>
+                        <td>
+                            @item.FirstName @item.SurName
+                        </td>
+                        <td>
+                            @{
+                                if (item.StudentImage != null)
+                                {
+                                    var base64 = Convert.ToBase64String(item.StudentImage);
+                                    var imgSrc = String.Format("data:image/png;base64,{0}", base64);
+
+                                    <img src=@imgSrc style="max-width:50px; max-height:50px;" />
+                                }
+                            }
+                        <td><a asp-action="Details" asp-route-id="@item.StudentID" class="btn btn-success btn-sm">Student Details</a></td>
+                        <td><a asp-action="Submit" asp-controller="AssessmentResults" asp-route-id="@item.StudentID" class="btn btn-primary btn-sm">Submit Result</a></td>
+                        <td><a asp-action="ShowResult" asp-route-id="@item.StudentID" class="btn btn-secondary btn-sm" target="_blank">Show Results</a></td>
+                    </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+
+

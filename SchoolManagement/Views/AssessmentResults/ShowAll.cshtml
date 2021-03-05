@@ -1,0 +1,53 @@
+﻿@model IEnumerable<ServicesLib.Domain.Models.AssessmentResult>
+
+@{
+    ViewData["Title"] = "ShowAll";
+}
+
+
+<div class="card">
+    <div class="card-header bg-info">
+        <h2 class="text-center" style="color:white">List Assessment Results</h2>
+    </div>
+    <div class="card-body">
+        <a asp-action="Submit" class="btn  btn-primary">Submit Assessment Result</a><hr />
+        <form method="post" asp-action="showAll">
+            <div class="col-6" style="margin: 0 auto">
+                <label class="control-label font-weight-bold">Select Programme</label>
+                <select name="ProgrammeID" class="form-control" asp-items="@(new SelectList(ViewBag.programmeList,"ProgrammeID","ProgrammeName"))">
+                    <option value="" selected>All</option>
+                </select>
+                <button type="submit" class="btn btn-block btn-success mt-3">Search</button>
+            </div>
+
+        </form>
+        <table class="table table-bordered table-striped">
+            <thead>
+                <tr>
+                    <th>Programme</th>
+                    <th>Module</th>
+                    <th>Assessment</th>
+                    <th>Assessment Date</th>
+                    <th>Student name</th>
+                    <th>Results</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var item in Model)
+                {
+                    <tr>
+                        <td>@item.Programme.ProgrammeName</td>
+                        <td>@item.Module.ModuleName</td>
+                        <td>@item.Assessment.AssessmentName</td>
+                        <td>@item.AssessmentDate.ToShortDateString()</td>
+                        <td>@item.Student.FirstName @item.Student.SurName</td>
+                        <td><a asp-action="ShowAssessmentResult" class="btn btn-sm btn-info" asp-route-id="@item.AssessmentResultID">Show Results</a></td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+</div>
+
+
+

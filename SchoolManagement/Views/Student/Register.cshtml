@@ -1,0 +1,259 @@
+﻿@model ServicesLib.Domain.Models.Student
+
+@{
+    ViewData["Title"] = "RegisterStudent";
+}
+
+<div class="card">
+    <div class="card-header bg-info">
+        <h2 class="text-center" style="color:white">Student Registration</h2>
+    </div>
+    <div class="card-body">
+        <form asp-action="Register" method="post" enctype="multipart/form-data">
+            <div asp-validation-summary="All" class="text-danger"></div>
+
+            @{
+                if (ViewBag.SuccessMsg != null)
+                {
+                    <div class="row">
+                        <div class="col-8 offset-2">
+                            <div class="bg-light p-2 text-center font-weight-bold" style="color:green">@ViewBag.SuccessMsg</div>
+                        </div>
+                    </div>
+                }
+            }
+
+            <div class="row">
+                <div class="col-8 offset-2">
+                    <div class="form-group">
+                        <label class="control-label font-weight-bold">Student Image</label>
+                        <input type="file" accept="image/*" name="Image" class="form-control">
+                    </div>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-8 offset-2">
+                    <div class="form-group">
+                        <label asp-for=StudentID class="control-label font-weight-bold"></label>
+                        <input type="text" asp-for=StudentID value="@ViewBag.StudentId" class="form-control" readonly>
+                        <span asp-validation-for=StudentID class="text-danger"></span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-8 offset-2">
+                    <div class="form-group">
+                        <label asp-for=FirstName class="control-label font-weight-bold"></label>
+                        <input type="text" asp-for=FirstName class="form-control">
+                        <span asp-validation-for=FirstName class="text-danger"></span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-8 offset-2">
+                    <div class="form-group">
+                        <label asp-for=SurName class="control-label font-weight-bold"></label>
+                        <input type="text" asp-for=SurName class="form-control">
+                        <span asp-validation-for=SurName class="text-danger"></span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-8 offset-2">
+                    <div class="form-group">
+                        <label asp-for=Password class="control-label font-weight-bold"></label>
+                        <input type="password" asp-for=Password class="form-control">
+                        <span asp-validation-for=Password class="text-danger"></span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-8 offset-2">
+                    <div class="form-group">
+                        <label asp-for=AddressOne class="control-label font-weight-bold"></label>
+                        <input type="text" asp-for=AddressOne class="form-control">
+                        <span asp-validation-for=AddressOne class="text-danger"></span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-8 offset-2">
+                    <div class="form-group">
+                        <label asp-for=AddressTwo class="control-label font-weight-bold"></label>
+                        <input type="text" asp-for=AddressTwo class="form-control">
+                        <span asp-validation-for=AddressTwo class="text-danger"></span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-8 offset-2">
+                    <div class="form-group">
+                        <label asp-for=Town class="control-label font-weight-bold"></label>
+                        <input type="text" asp-for=Town class="form-control">
+                        <span asp-validation-for=Town class="text-danger"></span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-8 offset-2">
+                    <div class="form-group">
+                        <label asp-for=County class="control-label font-weight-bold"></label>
+                        <input type="text" asp-for=County class="form-control">
+                        <span asp-validation-for=County class="text-danger"></span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-8 offset-2">
+                    <div class="form-group">
+                        <label asp-for=MobilePhoneNumber class="control-label font-weight-bold"></label>
+                        <input type="text" asp-for=MobilePhoneNumber class="form-control">
+                        <span asp-validation-for=MobilePhoneNumber class="text-danger"></span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-8 offset-2">
+                    <div class="form-group">
+                        <label asp-for=EmergencyMobilePhoneNumber class="control-label font-weight-bold"></label>
+                        <input type="text" asp-for=EmergencyMobilePhoneNumber class="form-control">
+                        <span asp-validation-for=EmergencyMobilePhoneNumber class="text-danger"></span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-8 offset-2">
+                    <div class="form-group">
+                        <label asp-for=EmailAddress class="control-label font-weight-bold"></label>
+                        <input type="email" asp-for=EmailAddress class="form-control">
+                        <span asp-validation-for=EmailAddress class="text-danger"></span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-8 offset-2">
+                    <div class="form-group">
+                        <label asp-for=DateOfBirth class="control-label font-weight-bold"></label>
+                        <input asp-for=DateOfBirth asp-format="{0:yyyy-MM-dd}" class="form-control">
+                        <span asp-validation-for=DateOfBirth class="text-danger"></span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-8 offset-2">
+                    <div class="form-group">
+                        <label asp-for=StudentPPS class="control-label font-weight-bold"></label>
+                        <input type="text" asp-for=StudentPPS class="form-control">
+                        <span asp-validation-for=StudentPPS class="text-danger"></span>
+                    </div>
+                </div>
+            </div>
+
+
+            <div class="row">
+                <div class="col-8 offset-2">
+                    <div class="form-group">
+                        <label class="control-label font-weight-bold">Programme options:</label>
+                        <select asp-for=ProgrammeID class="form-control" asp-items="@(new SelectList(ViewBag.ProgrammeList,"ProgrammeID","ProgrammeName"))">
+                            <option value="">---Select Programme---</option>
+                        </select>
+                        <span asp-validation-for=ProgrammeID class="text-danger"></span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-8 offset-2">
+                    <div class="form-group">
+                        <label asp-for=ProgrammeFeePaid class="control-label font-weight-bold"></label>
+                        <input type="text" asp-for=ProgrammeFeePaid class="form-control">
+                        <span asp-validation-for=ProgrammeFeePaid class="text-danger"></span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-8 offset-2">
+                    <div class="form-group">
+                        <label asp-for=GenderType class="control-label font-weight-bold"></label>
+
+                        <div class="form-check">
+                            <input class="form-check-input" type="radio" asp-for="GenderType" value="male">
+                            <label class="form-check-label">
+                                Male
+                            </label>
+
+                        </div>
+
+                        <div class="form-check">
+                            <input class="form-check-input" type="radio" asp-for="GenderType" value="female">
+                            <label class="form-check-label">
+                                Female
+                            </label>
+
+                        </div>
+                        <span asp-validation-for=GenderType class="text-danger"></span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-8 offset-2">
+                    <div class="form-group">
+                        <label asp-for=FullOrPartTime class="control-label font-weight-bold"></label>
+
+                        <div class="form-check">
+                            <input class="form-check-input" type="radio" asp-for="FullOrPartTime" value="fulltime">
+                            <label class="form-check-label">
+                                Full-Time
+                            </label>
+
+                        </div>
+
+                        <div class="form-check">
+                            <input class="form-check-input" type="radio" asp-for="FullOrPartTime" value="fulltime">
+                            <label class="form-check-label">
+                                Part-Time
+                            </label>
+
+                        </div>
+                        <span asp-validation-for=FullOrPartTime class="text-danger"></span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-md-6 offset-3">
+                    <div class="form-group">
+                        <input type="submit" value="Register" class="btn btn-success btn-block" />
+                    </div>
+                </div>
+            </div>
+
+
+        </form>
+    </div>
+</div>
+
+    <div class="row">
+        <div class="col-8 offset-2">
+            
+        </div>
+    </div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

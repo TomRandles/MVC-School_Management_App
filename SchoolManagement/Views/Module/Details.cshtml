@@ -1,0 +1,57 @@
+﻿@model ServicesLib.Domain.Models.Module
+
+@{
+    ViewData["Title"] = "Details";
+}
+
+<h1>Details</h1>
+@{
+    if (ViewBag.SuccessMsg != null)
+    {
+        <div class="row">
+            <div class="col-8 offset-2">
+                <div class="bg-light p-2 text-center font-weight-bold" style="color:green">@ViewBag.SuccessMsg</div>
+            </div>
+        </div>
+    }
+}
+
+<div>
+    <h4>Module</h4>
+    <hr />
+    <dl class="row">
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.ModuleName)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.ModuleName)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.ModuleDescription)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.ModuleDescription)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.ModuleCredits)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.ModuleCredits)
+        </dd>
+        @{
+            if (Model.Programme != null)
+            {
+                <dt class="col-sm-2">
+                    @Html.DisplayNameFor(model => model.Programme.ProgrammeName)
+                </dt>
+                <dd class="col-sm-10">
+                    @Html.DisplayFor(model => model.Programme.ProgrammeName)
+                </dd>
+            }
+        }
+    </dl>
+</div>
+<div>
+    <a asp-action="Edit" asp-route-id="@Model.ModuleID">Edit</a> |
+    <a asp-action="Index">Back to List</a>
+</div>

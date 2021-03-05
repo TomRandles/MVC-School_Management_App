@@ -1,0 +1,53 @@
+﻿@model ServicesLib.Domain.Models.AssessmentResult
+
+@{
+    ViewData["Title"] = "ShowAssessmentResult";
+}
+
+<div class="card">
+    <div class="card-header bg-info">
+        <h2 class="text-center" style="color:white">Show Assessment Result</h2>
+    </div>
+    <div class="card-body">
+        <a asp-action="ShowAll" class="btn  btn-primary">Back to List</a>
+        <hr />
+        <div class="table-responsive">
+            <table class="table table-bordered table-striped ">
+                <thead>
+                    <tr>
+                        <th>Student</th>
+                        <th>Programme</th>
+                        <th>Module</th>
+                        <th>Assessment</th>
+                        <th>Assessment date</th>
+                        <th>Feedback</th>
+                        <th>Mark</th>
+
+                        @if (User.IsInRole("Admin"))
+                        {
+                            <th>Action</th>
+                        }
+
+                    </tr>
+                </thead>
+                <tbody>
+
+                    <tr>
+                        <td>@Model.Student.FirstName @Model.Student.SurName</td>
+                        <td>@Model.Programme.ProgrammeName</td>
+                        <td>@Model.Module.ModuleName</td>
+                        <td>@Model.Assessment.AssessmentName</td>
+                        <td>@Model.AssessmentDate.ToShortDateString()</td>
+                        <td>@Model.AssessmentResultDescription</td>
+                        <td>@Model.AssessmentResultMark</td>
+                        @if (User.IsInRole("Admin"))
+                        {
+                            <td><a asp-action="Delete" class="btn btn-sm btn-danger" asp-route-id="@Model.AssessmentResultID">Delete</a></td>
+                        }
+
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>

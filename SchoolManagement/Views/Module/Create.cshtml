@@ -1,0 +1,103 @@
+﻿@model ServicesLib.Domain.Models.Module
+
+@{
+    ViewData["Title"] = "Create";
+    List<Programme> programmeList = ViewBag.ProgrammeList;
+}
+
+<div class="card">
+    <div class="card-header bg-info">
+        <h2 class="text-center" style="color:white">Create a Module</h2>
+    </div>
+    <div class="card-body">
+        <form method="post" asp-action="create" class="form-horizontal">
+            <div>
+                <div class="container">
+
+                    @{
+                        if (ViewBag.SuccessMsg != null)
+                        {
+                            <div class="row">
+                                <div class="col-8 offset-2">
+                                    <div class="bg-light p-2 text-center font-weight-bold" style="color:green">@ViewBag.SuccessMsg</div>
+                                </div>
+                            </div>
+                        }
+                        <br />
+                    }
+
+                    <div class="row">
+
+                        <div class="form-group col-4 offset-4">
+                            <label asp-for=ModuleID class="control-label font-weight-bold"></label>
+                            <input type="text" asp-for=ModuleID value="@ViewBag.ModuleID" class="form-control" readonly>
+                            <span asp-validation-for=ModuleID class="text-danger"></span>
+                        </div>
+
+                    </div>
+
+                    <div class="row">
+
+                        <div class="form-group col-4 offset-4">
+                            <label asp-for=ModuleName class="control-label font-weight-bold"></label>
+                            <input type="text" asp-for=ModuleName class="form-control">
+                            <span asp-validation-for=ModuleName class="text-danger"></span>
+                        </div>
+
+                    </div>
+
+                    <div class="row">
+
+                        <div class="form-group col-4 offset-4">
+                            <label asp-for=ModuleDescription class="control-label font-weight-bold"></label>
+                            <textarea type="text" asp-for=ModuleDescription class="form-control" rows="2"></textarea>
+                            <span asp-validation-for=ModuleDescription class="text-danger"></span>
+                        </div>
+
+                    </div>
+
+                    <div class="row">
+
+                        <div class="form-group col-4 offset-4">
+                            <label asp-for=ModuleCredits class="control-label font-weight-bold"></label>
+                            <input type="text" asp-for=ModuleCredits class="form-control">
+                            <span asp-validation-for=ModuleCredits class="text-danger"></span>
+                        </div>
+
+                    </div>
+
+                    @*Add module to an existing programme*@
+                    @* Dropdown for existing programmes that the student may select.*@
+
+                    <div class="row">
+
+                        <div class="form-group col-4 offset-4">
+                            <label asp-for=ProgrammeID class="control-label font-weight-bold">Programme options:</label>
+                            <select class="form-control" asp-for=ProgrammeID asp-items="@(new SelectList(programmeList,"ProgrammeID","ProgrammeName"))">
+
+                                <option value="">--Select Programme--</option>
+
+                            </select>
+                            <span asp-validation-for=ProgrammeID class="text-danger"></span>
+                        </div>
+
+                    </div>
+                    <br />
+
+                    <div class="row">
+
+                        <div class="form-group col-4 offset-4">
+                            <button type="submit" class="btn btn-success btn-block">Create Module</button>
+                        </div>
+
+                    </div>
+                    <br />
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

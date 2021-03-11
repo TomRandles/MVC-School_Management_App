@@ -14,6 +14,7 @@ using Microsoft.AspNetCore.Authentication.JwtBearer;
 using ServicesLib.Services.Database;
 using ServicesLib.Domain.Models;
 using ServicesLib.Services.Repositories;
+using Microsoft.Extensions.Logging;
 
 namespace School_Management
 {
@@ -160,8 +161,10 @@ namespace School_Management
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
-        public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
+        public void Configure(IApplicationBuilder app, IWebHostEnvironment env, ILoggerFactory loggerFactory)
         {
+            //loggerFactory.AddFile("Logs/mylog-{Date}.txt");
+
             if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();

@@ -3,9 +3,9 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using Serilog;
 using ServicesLib.Domain.Utilities;
 using ServicesLib.Services.Database;
-using ServicesLib.Services.Repository.Generic;
 using System;
 
 namespace School_Management
@@ -14,6 +14,17 @@ namespace School_Management
     {
         public static void Main(string[] args)
         {
+            // Build a configuration system to read appsettings
+            // Pre DI approach
+            var configuration = new ConfigurationBuilder()
+                 .AddJsonFile("appsettings.json")
+                 .Build();
+
+            // Create Log
+            Log.Logger = new LoggerConfiguration()
+                .ReadFrom.Configuration(configuration)
+                .CreateLogger();
+            
             var host = CreateHostBuilder(args).Build();
 
             var config = host.Services.GetRequiredService<IConfiguration>();
@@ -32,41 +43,30 @@ namespace School_Management
                 }
                 catch (DbUpdateConcurrencyException e)
                 {
-                    ErrorProcessing.ProcessException("Program - db update concurrency error: ",
-                                            e,
-                                            ErrorType.Critical);
-
-                    // Log.Information("Exiting application ...");
-                    // Log.CloseAndFlush();
+                    Log.Fatal(e, "Db Update Concurrency exception");
+                    Log.Information("Exiting application ...");
+                    Log.CloseAndFlush();
                     host.StopAsync();
                 }
                 catch (DbUpdateException e)
                 {
-                    ErrorProcessing.ProcessException("Program - db update error: ",
-                                                     e, 
-                                                     ErrorType.Critical);
-                    // Log.Information("Exiting application ...");
-                    // Log.CloseAndFlush();
+                    Log.Fatal(e, "Db update exception");
+                    Log.Information("Exiting application ...");
+                    Log.CloseAndFlush();
                     host.StopAsync();
                 }
                 catch (InvalidOperationException e)
                 {
-                    ErrorProcessing.ProcessException("Program - db invalid operation error: ",
-                                                     e,
-                                                     ErrorType.Critical);
-
-                    // Log.Information("Exiting application ...");
-                    // Log.CloseAndFlush();
+                    Log.Fatal(e, "Db Invalid Operation exception");
+                    Log.Information("Exiting application ...");
+                    Log.CloseAndFlush();
                     host.StopAsync();
                 }
                 catch (Exception e)
                 {
-                    ErrorProcessing.ProcessException("Program - general error: ",
-                                            e,
-                                            ErrorType.Critical);
-
-                    //Log.Information("Exiting application ...");
-                    //Log.CloseAndFlush();
+                    Log.Fatal(e, "General exception");
+                    Log.Information("Exiting application ...");
+                    Log.CloseAndFlush();
                     host.StopAsync();
                 }
             }
@@ -74,11 +74,21 @@ namespace School_Management
             host.Run();
         }
 
-        public static IHostBuilder CreateHostBuilder(string[] args) =>
-            Host.CreateDefaultBuilder(args)
+        public static IHostBuilder CreateHostBuilder(string[] args)
+        {
+            return Host.CreateDefaultBuilder(args)
+                //.ConfigureLogging((context, logging) =>
+                //{
+                //    logging.ClearProviders();
+                //    logging.AddConfiguration(context.Configuration.GetSection("Logging"));
+                //    logging.AddConsole();
+                //    logging.AddDebug();
+                //})
+                .UseSerilog()
                 .ConfigureWebHostDefaults(webBuilder =>
                 {
                     webBuilder.UseStartup<Startup>();
                 });
+        }
     }
 }

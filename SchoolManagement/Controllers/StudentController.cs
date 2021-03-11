@@ -12,7 +12,7 @@ using ServicesLib.Services.Repositories;
 using SchoolManagement.ViewModel;
 using ServicesLib.Domain.Utilities;
 using ServicesLib.Services.Repository.Generic;
-using SchoolManagement.Utilities;
+using Microsoft.Extensions.Logging;
 
 namespace SchoolManagement.Controllers
 {
@@ -23,16 +23,19 @@ namespace SchoolManagement.Controllers
         private readonly IStudentRepository studentRepository;
         private readonly IRepository<Programme> programmeRepository;
         private readonly IAssessmentResultRepository assessmentResultRepository;
+        private readonly ILogger<StudentController> logger;
 
         public StudentController(UserManager<AppUser> userManager,
                                  IStudentRepository studentRepository,
                                  IProgrammeRepository programmeRepository,
-                                 IAssessmentResultRepository assessmentResultRepository)
+                                 IAssessmentResultRepository assessmentResultRepository,
+                                 ILogger<StudentController> logger)
         {
             this.userManager = userManager;
             this.studentRepository = studentRepository;
             this.programmeRepository = programmeRepository;
             this.assessmentResultRepository = assessmentResultRepository;
+            this.logger = logger;
         }
 
         [Authorize(Roles = "Admin")]
